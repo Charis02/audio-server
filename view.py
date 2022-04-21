@@ -1,12 +1,20 @@
 from flask import Flask,request,render_template
-from flask_pymongo import PyMongo
-import os
+import pymongo
+from pymongo import MongoClient
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/audio_db"
-mongo = PyMongo(app)
 
 allowed_types = {'txt'}
+
+
+def get_db():
+    client = MongoClient(host='audio_mongodb',
+                         port=27017, 
+                         username='root', 
+                         password='pass',
+                        authSource="admin")
+    db = client["audio_db"]
+    return db
 
 @app.route('/')
 def hello_world():
@@ -34,7 +42,7 @@ def upload():
             return 'File uploaded successfully'
         else:
             return 'Unsupported file type!'
-            
+
     return render_template('upload.html')
 
 if __name__ == '__main__':
