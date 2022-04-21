@@ -4,10 +4,12 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-allowed_types = {'txt'}
-
+allowed_types = {'txt','mp3'}
 
 def get_db():
+    """
+    Returns database connection
+    """
     client = MongoClient(host='audio_mongodb',
                          port=27017, 
                          username='root', 
@@ -22,9 +24,21 @@ def hello_world():
 
 
 def get_filetype(filename):
+    """
+    Returns filetype of file
+    """
     return filename.rsplit('.', 1)[1].lower()
 
+def get_name(filename):
+    """
+    Returns name of file
+    """
+    return filename.rsplit('.', 1)[0]
+
 def allowed_file(filename):
+    """
+    Returns true if filetype is allowed
+    """
     return '.' in filename and get_filetype(filename) in allowed_types
 
 @app.route('/upload', methods=['GET','POST'])
@@ -37,8 +51,11 @@ def upload():
     """
     if request.method == 'POST':
         f = request.files['file']
-        
+        db = get_db()
+    
         if allowed_file(f.filename):
+            new_audio = {"name": get_name(f.filename),"contents": f.read()} # create object to store in db
+            db.audio.insert_one(new_audio)
             return 'File uploaded successfully'
         else:
             return 'Unsupported file type!'
