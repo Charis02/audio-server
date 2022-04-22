@@ -10,12 +10,12 @@
     <h1>Statistics</h1>
 
     <h2>Top 10 file formats</h2>
-    {{formats}}
+    {{formats | safe}}
 
     <h2>Average file size</h2>
     {{average}}
 
     <h2>Histogram of file uploads for last 7 days</h2>
-    {{histogram}}
+    <img src="/plot.png" alt="plot">
 </body>
 </html>

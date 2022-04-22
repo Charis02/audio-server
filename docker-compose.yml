@@ -1,6 +1,6 @@
 app:
   build: .
-  command: python view.py
+  command: python3 view.py
   ports:
     - "5000:5000"
   volumes:
