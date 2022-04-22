@@ -10,8 +10,11 @@
     <h1>Upload file(s)</h1>
 
     <form method=post enctype=multipart/form-data>
-        <input type=file name=file>
+        <input type=file name='file' multiple="">
         <input type=submit value=Upload>
       </form>
+
+      <h2>Uploaded files</h2>
+      {{result | safe}}
 </body>
 </html>
