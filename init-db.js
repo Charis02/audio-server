@@ -1,7 +1,7 @@
-db = db.getSiblingDB('audio-files');
-db.audio_files.drop();
+db = db.getSiblingDB('audio_db');
+db.files.drop();
 
-db.audio_files.insert({
+db.files.insert({
     "id": "1",
     "title": "The Beatles - Yesterday",
 });
