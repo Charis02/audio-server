@@ -60,7 +60,7 @@ def upload():
         result = []
         files = request.files.getlist('file')
         cur_date = datetime.datetime.utcnow()
-        date = datetime.datetime(cur_date.year,cur_date.month,cur_date.day,0,0,0)
+        date = datetime.datetime(cur_date.year,cur_date.month,date.day,0,0,0)
 
         for f in files:
             db = get_db()
@@ -143,7 +143,7 @@ def stats():
 
     ## Top 10 file formats
     
-    format_pipeline = [{"$group":{"_id":"$filetype","cnt":{"$sum":1}}},{"$sort":{"cnt":-1}},{"$limit":10}]
+    format_pipeline = [{"$group":{"_id":"$filetype","cnt":{"$sum":1}}},{"$sort":{"cnt":-1,"_id":1}},{"$limit":10}]
     formats_raw = db.files.aggregate(format_pipeline)
     formats = []
 
